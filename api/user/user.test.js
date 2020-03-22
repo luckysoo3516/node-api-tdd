@@ -2,10 +2,17 @@
 const request = require('supertest');
 const should = require('should');
 const app = require('../../'); // 자동으로 index.js 를 가져옴
+const models = require('../../models');
+
 
 //done은 
-describe('GET /users 는', () => {
+describe.only('GET /users 는', () => {
     describe('성공시', () => {
+        const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+        // db 싱크는 비동기라 done 필요하다. 모카에서는 done을 하지 않고 return만 해줘도
+        // Promise객체로 반환되는 db sync를 비동기가 끝날때까지 기다렸다 반환해준다.
+        before(() => models.sequelize.sync({force:true}));
+        before(() => models.User.bulkCreate(users)); // 샘플데이터 집어넣기
         it('유저 객체를 담은 배열로 응답한다', (done) => {
             request(app)
                 .get('/users')

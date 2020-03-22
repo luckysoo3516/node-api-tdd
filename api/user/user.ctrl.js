@@ -1,9 +1,5 @@
-// 실제 api의 로직
-let users = [
-    {id : 1, name : "Alice"},
-    {id : 2, name : "bel"},
-    {id : 3, name : "chris"}
-]; // db로 대체될 예정
+// api의 로직.
+const models = require('../../models');
 
 const index = (req, res) => {
     req.query.limit = req.query.limit || 10;
@@ -11,7 +7,14 @@ const index = (req, res) => {
     if(Number.isNaN(limit)) {
         return res.status(400).end();
     }
-    res.json(users.slice(0, limit));
+    // 데이터 조회
+    models.User
+        .findAll({
+            limit : limit
+        })
+        .then(users => {
+        res.json(users);
+    });
 };
 
 const show = (req, res) => {
