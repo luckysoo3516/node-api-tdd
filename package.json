@@ -1,7 +1,6 @@
 {
   "name": "node-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha api/user/user.test.js",
@@ -12,11 +11,25 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "sequelize": "^5.21.5",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "mocha": "^7.1.0",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
-  }
+  },
+  "bin": {
+    "node-api": "sync-db.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckysoo3516/node-api-tdd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luckysoo3516/node-api-tdd/issues"
+  },
+  "homepage": "https://github.com/luckysoo3516/node-api-tdd#readme",
+  "description": ""
 }
