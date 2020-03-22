@@ -6,13 +6,13 @@ const models = require('../../models');
 
 
 //done은 
-describe.only('GET /users 는', () => {
+describe('GET /users 는', () => {
+    const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+    // db 싱크는 비동기라 done 필요하다. 모카에서는 done을 하지 않고 return만 해줘도
+    // Promise객체로 반환되는 db sync를 비동기가 끝날때까지 기다렸다 반환해준다.
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users)); // 샘플데이터 집어넣기
     describe('성공시', () => {
-        const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
-        // db 싱크는 비동기라 done 필요하다. 모카에서는 done을 하지 않고 return만 해줘도
-        // Promise객체로 반환되는 db sync를 비동기가 끝날때까지 기다렸다 반환해준다.
-        before(() => models.sequelize.sync({force:true}));
-        before(() => models.User.bulkCreate(users)); // 샘플데이터 집어넣기
         it('유저 객체를 담은 배열로 응답한다', (done) => {
             request(app)
                 .get('/users')
@@ -40,6 +40,9 @@ describe.only('GET /users 는', () => {
     })
 })
 describe('GET /users/:id', () => {
+    const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         it('id가 1인 유저 객체를 반환한다', (done) => {
             request(app)
@@ -69,6 +72,9 @@ describe('GET /users/:id', () => {
 })
 
 describe('DELETE /users/:id', () => {
+    const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         it('204를 응답한다', (done) => {
             request(app)
@@ -85,6 +91,9 @@ describe('DELETE /users/:id', () => {
     })
 })
 describe('POST /users/:id', () => {
+    const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         let body;
         let name = 'daniel';
@@ -123,6 +132,9 @@ describe('POST /users/:id', () => {
     })
 });
 describe('PUT /users/:id', () => {
+    const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
+    before(() => models.sequelize.sync({force:true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         it('변경된 name을 응답한다', done => {
             const name = 'charley';
@@ -157,7 +169,7 @@ describe('PUT /users/:id', () => {
             .expect(404)
             .end(done);
         });
-        it('이름이 중복일 경우 400을 응답한다', done => {
+        it('이름이 중복일 경우 409를 응답한다', done => {
             request(app)
             .put('/users/3')
             .send({name : 'bel'})

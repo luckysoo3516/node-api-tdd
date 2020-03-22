@@ -7,7 +7,10 @@ const sequelize = new Sequelize(
 // dialect는 사용할 db, storage는 db가 있는 곳
 
 const User = sequelize.define('User', {
-    name : Sequelize.DataTypes.STRING
+    name : {
+        type : Sequelize.STRING,
+        unique : true
+    }
 })
 
 module.exports = { Sequelize, sequelize, User }
