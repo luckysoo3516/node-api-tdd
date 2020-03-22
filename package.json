@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index.test.js",
-    "start": "node index.js"
+    "test": "NODE_ENV=test mocha api/user/user.test.js",
+    "start": "node bin/www.js"
   },
   "keywords": [],
   "author": "",

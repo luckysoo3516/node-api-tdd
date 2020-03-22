@@ -1,6 +1,7 @@
+// 테스트 코드
 const request = require('supertest');
 const should = require('should');
-const app = require('./index');
+const app = require('../../'); // 자동으로 index.js 를 가져옴
 
 //done은 
 describe('GET /users 는', () => {
@@ -31,7 +32,7 @@ describe('GET /users 는', () => {
         })
     })
 })
-describe('GET /users/1', () => {
+describe('GET /users/:id', () => {
     describe('성공시', () => {
         it('id가 1인 유저 객체를 반환한다', (done) => {
             request(app)
@@ -76,7 +77,7 @@ describe('DELETE /users/:id', () => {
         })
     })
 })
-describe('POST /users', () => {
+describe('POST /users/:id', () => {
     describe('성공시', () => {
         let body;
         let name = 'daniel';
@@ -114,3 +115,48 @@ describe('POST /users', () => {
         })
     })
 });
+describe('PUT /users/:id', () => {
+    describe('성공시', () => {
+        it('변경된 name을 응답한다', done => {
+            const name = 'charley';
+            request(app)
+            .put('/users/3')
+            .send({name})
+            .end((err, res) => {
+                // 응답이 오는 부분
+                res.body.should.have.property('name', name);
+                done();
+            });
+        })
+    })
+    describe('실패시', () => {
+        it('정수가 아닌 id일 경우 400을 응답한다', done => {
+            request(app)
+            .put('/users/one')
+            .expect(400)
+            .end(done);
+        });
+        it('name이 없을 경우 400을 응답한다', done => {
+            request(app)
+            .put('/users/1')
+            .send({})
+            .expect(400)
+            .end(done);
+        });
+        it('없는 유저일 경우 404를 응답한다', done => {
+            request(app)
+            .put('/users/999')
+            .send({name: 'foo'})
+            .expect(404)
+            .end(done);
+        });
+        it('이름이 중복일 경우 400을 응답한다', done => {
+            request(app)
+            .put('/users/3')
+            .send({name : 'bel'})
+            .expect(409)
+            .end(done);
+        })
+
+    })
+})
