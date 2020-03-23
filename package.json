@@ -18,7 +18,8 @@
   "devDependencies": {
     "mocha": "^7.1.0",
     "should": "^13.2.3",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "supertest-session": "^4.0.0"
   },
   "bin": {
     "node-api": "sync-db.js"
