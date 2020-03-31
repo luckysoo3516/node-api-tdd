@@ -5,6 +5,7 @@ const app = require('../../'); // 자동으로 index.js 를 가져옴
 const models = require('../../models');
 
 
+
 //done은 
 describe('GET /users 는', () => {
     const users = [{name : 'alice'}, {name : 'bel'}, {name : 'chris'}]
@@ -48,7 +49,7 @@ describe('GET /users/:id', () => {
             request(app)
                 .get('/users/1')
                 .end((err, res) => {
-                    res.body.should.have.property('id', 1)
+                    res.body.should.have.properties(['id','name'])
                     done();
                 });
         });

@@ -1,3 +1,6 @@
 node_modules
 
 package-lock.json
+
+.env
+tts1.mp3

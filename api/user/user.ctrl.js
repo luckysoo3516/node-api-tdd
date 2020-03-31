@@ -1,6 +1,9 @@
 // api의 로직.
 const models = require('../../models');
+// const bent = require('bent');
 
+
+// sequelize 는 Promise객체로 리턴하기 떄문에 반드시 then으로 받아줘야함
 const index = (req, res) => {
     req.query.limit = req.query.limit || 10;
     const limit = parseInt(req.query.limit, 10); // req는 다 string임.
@@ -83,5 +86,7 @@ const update = (req, res) => {
                 })
         })
 }
+
+
 
 module.exports = { index, show, create, destroy, update }

@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha api/user/user.test.js -w",
+    "test": "NODE_ENV=test mocha",
     "start": "node bin/www.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bent": "^7.1.2",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "morgan": "^1.9.1",
+    "request": "^2.88.2",
     "sequelize": "^5.21.5",
     "sqlite3": "^4.1.1"
   },

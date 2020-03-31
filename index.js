@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const user = require('./api/user/index');
+const tts = require('./api/tts/index');
+const ENV = require('dotenv').config();
 
 // script에서 설정한 NODE_ENV라는 환경변수는 process라는 객체에 들어가게됨.
 if(process.env.NODE_ENV !== 'test'){
@@ -13,5 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/users', user); // /users로 들어오는 모든 요청은 user가 담당한다.
-app.use('/photos', photo); // api 확장
+// app.use('/photos', photo); // api 확장
+app.use('/tts', tts);
 module.exports = app;
